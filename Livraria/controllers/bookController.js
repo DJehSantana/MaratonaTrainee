@@ -16,6 +16,10 @@ async function getBook(req, res) {
         if (!id || !parseInt(id)) {
             throw new Error('Registro não encontrado');
         }
+
+        db.get('select * from book where id=?', id, (err, rows) => {
+            res.json(rows)
+        });
     } catch (error) {
         return res.status(404).json({ message: error.message });
     }
@@ -45,6 +49,11 @@ async function deleteBook(req, res) {
         if (!id || !parseInt(id)) {
             throw new Error('Registro não encontrado');
         }
+
+        db.get('delete from book where id=?', id, () => {
+            res.json({ message: 'Registro deletado com sucesso!' })
+        });
+
     } catch (error) {
         return res.status(404).json({ message: error.message });
     }
@@ -59,13 +68,13 @@ async function updateBook(req, res) {
             throw new Error('Registro não encontrado');
         }
 
-        if (!title && !release_date && !id_editor) {
-            throw new Error('Favor inserir dados que deseja atualizar');
+        if (!title || !release_date || !id_editor) {
+            throw new Error('Favor inserir corretamente os dados que deseja atualizar');
         }
 
-        const stmt = db.prepare('insert into book (title, release_date) values(?, ?)');
-        stmt.run(title, release_date);
-        res.json({ title, release_date });
+        const stmt = db.prepare('update book set title=?, release_date=?, id_editor=? where id=?');
+        stmt.run(title, release_date, id_editor, id);
+        res.json({ title, release_date, id_editor });
     } catch (error) {
         return res.status(400).json({ message: error.message });
     }

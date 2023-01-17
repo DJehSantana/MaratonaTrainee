@@ -7,6 +7,6 @@ editorRouter.get('/', getAllEditors);
 editorRouter.get('/:id', getEditor);
 editorRouter.post('/', postEditor);
 editorRouter.delete('/:id', deleteEditor);
-editorRouter.patch('/:id', updateEditor);
+editorRouter.put('/:id', updateEditor);
 
 export { editorRouter };

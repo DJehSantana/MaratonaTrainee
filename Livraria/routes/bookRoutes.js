@@ -7,6 +7,6 @@ bookRouter.get('/', getAllBooks);
 bookRouter.get('/:id', getBook);
 bookRouter.post('/', postBook);
 bookRouter.delete('/:id', deleteBook);
-bookRouter.patch('/:id', updateBook);
+bookRouter.put('/:id', updateBook);
 
 export { bookRouter };

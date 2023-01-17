@@ -7,6 +7,6 @@ authorRouter.get('/', getAllAuthors);
 authorRouter.get('/:id', getAuthor);
 authorRouter.post('/', postAuthor);
 authorRouter.delete('/:id', deleteAuthor);
-authorRouter.patch('/:id', updateAuthor);
+authorRouter.put('/:id', updateAuthor);
 
 export { authorRouter };

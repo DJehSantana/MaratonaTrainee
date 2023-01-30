@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllAuthors, getAuthor, postAuthor, deleteAuthor, updateAuthor } from '../controllers/authorController.js';
+import { getAllAuthors, getAuthor, postAuthor, deleteAuthor, updateAuthor } from '../services/authorService.js';
 
 const authorRouter = express.Router();
 

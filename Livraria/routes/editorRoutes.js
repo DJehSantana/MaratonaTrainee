@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllEditors, getEditor, postEditor, deleteEditor, updateEditor } from '../controllers/editorControllers.js';
+import { getAllEditors, getEditor, postEditor, deleteEditor, updateEditor } from '../services/editorService.js';
 
 const editorRouter = express.Router();
 

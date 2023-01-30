@@ -13,6 +13,13 @@ app.use('/book', bookRouter);
 app.use('/author', authorRouter);
 app.use('/editor', editorRouter);
 
+app.use((err, req, res, next) => {
+    if (err) {
+        console.log(`[ERROR] ${req.url} - method: ${req.method} - ${err.message}`);
+        return res.status(err.status || 400).json(`error: ${err.message}`);
+    }
+});
+
 app.listen(3000, () => {
     console.log('Server running: http://localhost:3000');
 });

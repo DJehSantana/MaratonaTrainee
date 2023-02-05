@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    function buscarLivros() {
+        fetch('http://localhost:3000/book', {
+            method: "GET"
+        }).then(response => {
+            return response.json();
+        }).then(response => {
+            var coluna = document.getElementById('coluna');
+            let campos = '';
+            response.forEach(livro => {
+                campos += `
+                <tr>
+                    <td>${livro.id}</td>
+                    <td>${livro.title}</td>
+                    <td>${livro.release_date}</td>
+                    <td>${livro.publisher}</td>
+                </tr> 
+                `
+            });
+            coluna.innerHTML = campos;
+        });
+    }
+</script>
+
+
+<body onload="buscarLivros()">
+    <div id="conteudo">
+        <h3>Livros</h3>
+        <div>
+            <table border="">
+                <thead>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Data de lançamento</th>
+                    <th>Editora</th>
+                </thead>
+                <tbody id="coluna">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+
+</html>

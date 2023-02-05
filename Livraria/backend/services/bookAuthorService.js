@@ -2,10 +2,9 @@ import { db } from '../database/dbConfig.js';
 
 async function getAllBookAuthors(req, res, next) {
     try {
-        db.all(`select ba.id, a.fullname as author_name, b.title, b.release_date, e.name as editor_name from book_author ba 
+        db.all(`select ba.id, a.fullname as author_name, b.title, b.release_date, b.publisher from book_author ba 
         inner join author a on a.id=ba.id_author
-        inner join book b on b.id=ba.id_book
-        inner join editor e on e.id=b.id_editor`, (err, rows) => {
+        inner join book b on b.id=ba.id_book`, (err, rows) => {
             res.status(200).json(rows);
         });
 
@@ -17,10 +16,9 @@ async function getAllBookAuthors(req, res, next) {
 async function getBookAuthor(req, res, next) {
     try {
         const id = req.params.id;
-        db.get(`select ba.id, a.fullname as author_name, b.title, b.release_date, e.name as editor_name from book_author ba 
+        db.get(`select ba.id, a.fullname as author_name, b.title, b.release_date, b.publisher from book_author ba 
         inner join author a on a.id=ba.id_author
-        inner join book b on b.id=ba.id_book 
-        inner join editor e on e.id=b.id_editor where ba.id=?`, id, (err, rows) => {
+        inner join book b on b.id=ba.id_book where ba.id=?`, id, (err, rows) => {
             if (!rows) {
                 res.status(404).json('Registro não encontrado');
             }

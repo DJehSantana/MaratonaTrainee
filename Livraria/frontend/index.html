@@ -7,32 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<script>
-    function buscarLivros() {
-        fetch('http://localhost:3000/book', {
-            method: "GET"
-        }).then(response => {
-            return response.json();
-        }).then(response => {
-            var coluna = document.getElementById('coluna');
-            let campos = '';
-            response.forEach(livro => {
-                campos += `
-                <tr>
-                    <td>${livro.id}</td>
-                    <td>${livro.title}</td>
-                    <td>${livro.release_date}</td>
-                    <td>${livro.publisher}</td>
-                </tr> 
-                `
-            });
-            coluna.innerHTML = campos;
-        });
-    }
-</script>
 
-
-<body onload="buscarLivros()">
+<body>
     <div id="conteudo">
         <h3>Livros</h3>
         <div>
@@ -42,16 +18,60 @@
                     <th>Título</th>
                     <th>Data de lançamento</th>
                     <th>Editora</th>
+                    <th>Ações</th>
                 </thead>
                 <tbody id="coluna">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <tr v-for="(livro) in livros" :key="livro.id">
+                        <td>{{livro.id}}</td>
+                        <td>{{livro.title}}</td>
+                        <td>{{livro.release_date}}</td>
+                        <td>{{livro.publisher}}</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" disabled name="id" id="id"></td>
+                        <td><input type="text" placeholder="Digite o title" name="title" id="title"></td>
+                        <td><input type="text" placeholder="Digite o release_date" name="release_date"
+                                id="release_date"></td>
+                        <td><input type="text" placeholder="Digite o publisher" name="publisher" id="publisher"></td>
+                        <td><button @click="salvarLivro()">Salvar</button></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    form: {
+                        title: '',
+                        release_date: '',
+                        publisher: ''
+                    },
+                    livros: []
+                }
+
+            },
+            methods: {
+                async buscarLivros() {
+                    this.livros = await (await fetch('http://localhost:3000/book', { method: 'GET' })).json();
+                },
+                async salvarLivro() {
+                    alert('ok');
+                }
+            },
+            mounted() {
+                this.buscarLivros();
+            }
+        }).mount('#coluna');
+    </script>
+
+
+
+
 
 </body>
 

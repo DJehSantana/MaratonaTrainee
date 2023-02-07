@@ -29,10 +29,12 @@
                     </tr>
                     <tr>
                         <td><input type="text" disabled name="id" id="id"></td>
-                        <td><input type="text" placeholder="Digite o title" name="title" id="title"></td>
-                        <td><input type="text" placeholder="Digite o release_date" name="release_date"
-                                id="release_date"></td>
-                        <td><input type="text" placeholder="Digite o publisher" name="publisher" id="publisher"></td>
+                        <td><input type="text" v-model="form.title" placeholder="Digite o title" name="title"
+                                id="title"></td>
+                        <td><input type="text" v-model="form.release_date" placeholder="Digite o release_date"
+                                name="release_date" id="release_date"></td>
+                        <td><input type="text" v-model="form.publisher" placeholder="Digite o publisher"
+                                name="publisher" id="publisher"></td>
                         <td><button @click="salvarLivro()">Salvar</button></td>
                     </tr>
                 </tbody>
@@ -57,10 +59,24 @@
             },
             methods: {
                 async buscarLivros() {
-                    this.livros = await (await fetch('http://localhost:3000/book', { method: 'GET' })).json();
+                    this.livros = await (await fetch('http://localhost:3000/book', {
+                        method: 'GET'
+                    })).json();
                 },
                 async salvarLivro() {
-                    alert('ok');
+                    const livro = {
+                        title: this.form.title,
+                        release_date: this.form.release_date,
+                        publisher: this.form.publisher
+                    }
+
+                    const resultado = await fetch('http://localhost:3000/book', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(livro)
+                    });
                 }
             },
             mounted() {
